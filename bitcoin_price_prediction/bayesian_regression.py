@@ -180,14 +180,21 @@ def evaluate_performance(prices, dps, t, step):
         if dps[i - 720] > t and position <= 0:
             position += 1
             bank_balance -= prices[i]
+            print('Buying ....')
+            print('Balance: ' + str(bank_balance))
         # short position - SELL
         if dps[i - 720] < -t and position >= 0:
             position -= 1
             bank_balance += prices[i]
+            print('Buying ....')
+            print('Balance: ' + str(bank_balance))
+
     # sell what you bought
     if position == 1:
         bank_balance += prices[len(prices) - 1]
     # pay back what you borrowed
     if position == -1:
         bank_balance -= prices[len(prices) - 1]
+    print('Final balance' + str(bank_balance))
+
     return bank_balance

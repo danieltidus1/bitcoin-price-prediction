@@ -61,7 +61,7 @@ print('Find parameters...')
 w = find_parameters_w(Dpi_r, Dp)
 
 # Predict average price changes over the third time period.
-print('Predit dps...')
+print('Predict dps...')
 dps = predict_dps(prices3, v_bid3, v_ask3, s1, s2, s3, w)
 
 # What's your 'Fuck You Money' number?
