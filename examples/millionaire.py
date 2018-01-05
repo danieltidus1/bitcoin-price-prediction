@@ -6,7 +6,7 @@ from bitcoin_price_prediction.bayesian_regression import *
 
 client = MongoClient()
 database = client['okcoindb']
-collection = database['historical_data']
+collection = database['historical_data_btc_usd']
 
 # Retrieve price, v_ask, and v_bid data points from the database.
 prices = []

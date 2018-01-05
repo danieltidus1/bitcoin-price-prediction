@@ -160,7 +160,7 @@ def predict_dps(prices, v_bid, v_ask, s1, s2, s3, w):
     return dps
 
 
-def evaluate_performance(usd_amount, prices, dps, t, step):
+def evaluate_performance(prices, dps, t, step):
     """Use the third time period to evaluate the performance of the algorithm.
 
     Args:
@@ -196,6 +196,6 @@ def evaluate_performance(usd_amount, prices, dps, t, step):
     # pay back what you borrowed
     if position == -1:
         bank_balance -= prices[len(prices) - 1]
-    print('Final balance' + str(bank_balance))
+    print('Final balance: ' + str(bank_balance))
 
     return bank_balance
