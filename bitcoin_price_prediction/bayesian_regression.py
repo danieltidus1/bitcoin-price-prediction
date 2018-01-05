@@ -194,6 +194,6 @@ def evaluate_performance(coin_amount, prices, dates, dps, t, step):
     # pay back what you borrowed
     if position == -1:
         bank_balance -= coin_amount*prices[len(prices) - 1]
-    print('Operation date: ' + str(dates[len(dates) - 1]) + ' - Balance: ' + str(bank_balance))
-    print('Profit based on last price: ' + str((bank_balance/prices[len(prices) - 1])*100) + '%')
+    print('Operation date: ' + str(dates[len(dates) - 1]) + ' - Closing at price: ' + str(prices[len(prices) - 1]) + ' - Balance: ' + str(bank_balance))
+    print('Profit based on last price: ' + str((bank_balance/coin_amount*prices[len(prices) - 1])*100) + '%')
     return bank_balance
