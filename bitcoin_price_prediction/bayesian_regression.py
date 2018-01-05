@@ -221,12 +221,12 @@ def evaluate_performance2(coin_amount, prices, dates, dps, t, step):
         if dps[i - 720] > t and position == 0:
             position = 1
             bank_balance -= coin_amount*prices[i]
-            print('Operation date: ' + str(dates[i]) + ' - Buying .... at ' + str(prices[i]) + ' - Balance: ' + str(bank_balance))
+            print('Operation date: ' + str(dates[i]) + 'DPS Value: ' + str(dps[i - 720]) + ' - Buying .... at ' + str(prices[i]) + ' - Balance: ' + str(bank_balance))
         # short position - SELL
         if dps[i - 720] < -t and position == 1:
             position = 0
             bank_balance += coin_amount*prices[i]
-            print('Operation date: ' + str(dates[i]) + ' - Selling .... at  ' + str(prices[i]) + ' - Balance: ' + str(bank_balance))
+            print('Operation date: ' + str(dates[i]) + 'DPS Value: ' + str(dps[i - 720]) + ' - Selling .... at  ' + str(prices[i]) + ' - Balance: ' + str(bank_balance))
 
     # sell what you bought
     if position == 1:
