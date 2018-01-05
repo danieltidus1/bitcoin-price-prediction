@@ -1,27 +1,60 @@
-import sys
+import sys, getopt
 sys.path.append('.')
 
 from pymongo import MongoClient
 from bitcoin_price_prediction.bayesian_regression import *
 
+data_collection ='historical_data_btc_usd'
+data_base = 'okcoindb'
+_t = 0.0001
+_step = 1
+coin_amount = 1
+
+try:
+    opts, args = getopt.getopt(sys.argv[1:],"hd:c:t:s:a:")
+except getopt.GetoptError:
+    print 'okcoin.py -d <database> -c <collection> -t <threshold> -s <step> -a <coin amount>'
+    sys.exit(2)
+for opt, arg in opts:
+    if opt == '-h':
+        print 'okcoin.py -p <coin_pair>'
+        sys.exit()
+    elif opt == '-d':
+        data_base = arg
+    elif opt == '-c':
+        data_collection = arg
+    elif opt == '-t':
+        _t = float(arg)
+    elif opt == '-s':
+        _step = int(arg)
+    elif opt == '-a':
+        coin_amount = float(arg)
+
+
+print("Informations: Data base - " + data_base + " collection - " + data_collection)
+print("Informations: Coin amount - " + str(coin_amount) + " step - " + str(_step) + " threshold - " + str(_t))
+
 client = MongoClient()
-database = client['okcoindb']
-collection = database['historical_data_btc_usd']
+database = client[data_base]
+collection = database[data_collection]
 
 # Retrieve price, v_ask, and v_bid data points from the database.
 prices = []
+dates = []
 v_ask = []
 v_bid = []
 num_points = 777600
 print('Making data...')
 for doc in collection.find().limit(num_points):
     prices.append(doc['price'])
+    dates.append(doc['date'])
     v_ask.append(doc['v_ask'])
     v_bid.append(doc['v_bid'])
 
 # Divide prices into three, roughly equal sized, periods:
 # prices1, prices2, and prices3.
 [prices1, prices2, prices3] = np.array_split(prices, 3)
+[dates1, dates2, dates3] = np.array_split(dates, 3)
 
 # Divide v_bid into three, roughly equal sized, periods:
 # v_bid1, v_bid2, and v_bid3.
@@ -66,4 +99,4 @@ dps = predict_dps(prices3, v_bid3, v_ask3, s1, s2, s3, w)
 
 # What's your 'Fuck You Money' number?
 print('Evaluate Performance...')
-bank_balance = evaluate_performance(prices3, dps, t=0.0001, step=1)
+bank_balance = evaluate_performance(coin_amount, prices3, dates3, dps, t=_t, step=_step)
