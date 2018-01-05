@@ -99,4 +99,4 @@ dps = predict_dps(prices3, v_bid3, v_ask3, s1, s2, s3, w)
 
 # What's your 'Fuck You Money' number?
 print('Evaluate Performance...')
-bank_balance = evaluate_performance(coin_amount, prices3, dates3, dps, t=_t, step=_step)
+bank_balance = evaluate_performance2(coin_amount, prices3, dates3, dps, t=_t, step=_step)
